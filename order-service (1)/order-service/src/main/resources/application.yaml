@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: order-service
+
+  # Tell Boot 3.x+ to load config from your Config Server
+  config:
+    import: configserver:http://localhost:8888
+
+  cloud:
+    config:
+      fail-fast: true

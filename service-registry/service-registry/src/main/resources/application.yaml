@@ -1,0 +1,17 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: service-registry
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch‑registry: false
+  instance:
+    hostname: localhost
+    health-check-url-path: /actuator/health
+    status-page-url-path: /actuator/info
+
+

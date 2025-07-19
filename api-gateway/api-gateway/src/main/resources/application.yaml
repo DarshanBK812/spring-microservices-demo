@@ -1,0 +1,37 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  # ← THIS tells Boot 3.x to load from your Config Server
+  config:
+    import: "configserver:http://localhost:8888"
+
+  cloud:
+    config:
+      fail-fast: true
+
+    gateway:
+      # keep discovery-based routing…
+      discovery:
+        locator:
+          enabled: true
+          # ← ensures service IDs stay lowercase
+          lower-case-service-id: true
+
+      # …but you can also add an explicit route
+      routes:
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/order-service/**
+          filters:
+            - StripPrefix=1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh,gateway
